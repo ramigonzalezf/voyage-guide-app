@@ -23,10 +23,10 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
       </main>
 
       {/* Bottom Tab Bar */}
-      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-bottom">
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-t border-border/50 safe-bottom">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
           {tabs.map((tab) => {
-            const isActive = location.pathname === tab.path || 
+            const isActive = location.pathname === tab.path ||
               (tab.path === '/home' && location.pathname === '/');
             const Icon = tab.icon;
             return (
@@ -34,19 +34,19 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
                 key={tab.key}
                 onClick={() => navigate(tab.path)}
                 className={cn(
-                  'flex flex-col items-center justify-center gap-0.5 w-16 h-full transition-colors relative',
-                  isActive ? 'text-primary' : 'text-muted-foreground'
+                  'flex flex-col items-center justify-center gap-1 w-16 h-full transition-all relative',
+                  isActive ? 'text-primary' : 'text-muted-foreground/60'
                 )}
               >
                 {isActive && (
                   <motion.div
                     layoutId="tab-indicator"
-                    className="absolute -top-px left-3 right-3 h-0.5 bg-primary rounded-full"
+                    className="absolute -top-px left-4 right-4 h-0.5 bg-primary rounded-full"
                     transition={{ type: 'spring', stiffness: 400, damping: 30 }}
                   />
                 )}
-                <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 1.5} />
-                <span className={cn('text-[10px]', isActive ? 'font-semibold' : 'font-medium')}>
+                <Icon className={cn('h-5 w-5 transition-transform', isActive && 'scale-110')} strokeWidth={isActive ? 2.5 : 1.5} />
+                <span className={cn('text-[10px] leading-none', isActive ? 'font-bold' : 'font-medium')}>
                   {t(`tabs.${tab.key}`)}
                 </span>
               </button>

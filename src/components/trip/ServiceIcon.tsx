@@ -18,13 +18,13 @@ interface Props {
 export default function ServiceIcon({ type, size = 'md' }: Props) {
   const { icon: Icon, bgClass, textClass } = config[type];
   const sizeClasses = {
-    sm: 'h-8 w-8 [&_svg]:h-4 [&_svg]:w-4',
-    md: 'h-10 w-10 [&_svg]:h-5 [&_svg]:w-5',
-    lg: 'h-12 w-12 [&_svg]:h-6 [&_svg]:w-6',
+    sm: 'h-9 w-9 [&_svg]:h-4 [&_svg]:w-4',
+    md: 'h-11 w-11 [&_svg]:h-5 [&_svg]:w-5',
+    lg: 'h-14 w-14 [&_svg]:h-7 [&_svg]:w-7',
   };
 
   return (
-    <div className={cn('rounded-xl flex items-center justify-center shrink-0', bgClass, sizeClasses[size])}>
+    <div className={cn('rounded-2xl flex items-center justify-center shrink-0', bgClass, sizeClasses[size])}>
       <Icon className={textClass} />
     </div>
   );
