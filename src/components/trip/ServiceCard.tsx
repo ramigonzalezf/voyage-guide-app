@@ -1,8 +1,9 @@
+import { useNavigate } from 'react-router-dom';
 import type { Service } from '@/types/booking';
 import { useTranslation } from 'react-i18next';
 import ServiceIcon from './ServiceIcon';
 import StatusBadge from './StatusBadge';
-import { Clock, MapPin } from 'lucide-react';
+import { Clock, ChevronRight } from 'lucide-react';
 
 function getServiceTitle(service: Service, t: (key: string) => string): string {
   switch (service.type) {
@@ -53,15 +54,17 @@ interface Props {
 
 export default function ServiceCard({ service, compact = false, highlighted = false }: Props) {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const timeStr = getServiceTime(service, t);
   const meta = getServiceMeta(service, t);
 
   return (
-    <div
-      className={`flex items-start gap-3.5 p-3.5 rounded-2xl transition-shadow ${
+    <button
+      onClick={() => navigate(`/service/${service.id}`)}
+      className={`w-full flex items-start gap-3.5 p-3.5 rounded-2xl transition-shadow text-left group ${
         highlighted
           ? 'bg-primary/[0.04] ring-1 ring-primary/20 card-shadow-hover'
-          : 'bg-card card-shadow'
+          : 'bg-card card-shadow hover:card-shadow-hover'
       }`}
     >
       <ServiceIcon type={service.type} size={compact ? 'sm' : 'md'} />
@@ -87,6 +90,7 @@ export default function ServiceCard({ service, compact = false, highlighted = fa
           </p>
         )}
       </div>
-    </div>
+      <ChevronRight className="h-4 w-4 text-muted-foreground/40 group-hover:text-muted-foreground shrink-0 mt-0.5 transition-colors" />
+    </button>
   );
 }
