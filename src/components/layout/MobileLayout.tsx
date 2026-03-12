@@ -1,0 +1,59 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { Home, Map, Compass, Headphones } from 'lucide-react';
+import { cn } from '@/lib/utils';
+import { motion } from 'framer-motion';
+
+const tabs = [
+  { key: 'home', path: '/home', icon: Home },
+  { key: 'itinerary', path: '/itinerary', icon: Map },
+  { key: 'explore', path: '/explore', icon: Compass },
+  { key: 'support', path: '/support', icon: Headphones },
+] as const;
+
+export default function MobileLayout({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  return (
+    <div className="flex flex-col min-h-[100dvh] bg-background">
+      <main className="flex-1 overflow-y-auto pb-20">
+        {children}
+      </main>
+
+      {/* Bottom Tab Bar */}
+      <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/95 backdrop-blur-lg border-t border-border safe-bottom">
+        <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
+          {tabs.map((tab) => {
+            const isActive = location.pathname === tab.path || 
+              (tab.path === '/home' && location.pathname === '/');
+            const Icon = tab.icon;
+            return (
+              <button
+                key={tab.key}
+                onClick={() => navigate(tab.path)}
+                className={cn(
+                  'flex flex-col items-center justify-center gap-0.5 w-16 h-full transition-colors relative',
+                  isActive ? 'text-primary' : 'text-muted-foreground'
+                )}
+              >
+                {isActive && (
+                  <motion.div
+                    layoutId="tab-indicator"
+                    className="absolute -top-px left-3 right-3 h-0.5 bg-primary rounded-full"
+                    transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                  />
+                )}
+                <Icon className="h-5 w-5" strokeWidth={isActive ? 2.5 : 1.5} />
+                <span className={cn('text-[10px]', isActive ? 'font-semibold' : 'font-medium')}>
+                  {t(`tabs.${tab.key}`)}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      </nav>
+    </div>
+  );
+}
