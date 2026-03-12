@@ -6,7 +6,7 @@ import ServiceCard from '@/components/trip/ServiceCard';
 import StatusBadge from '@/components/trip/StatusBadge';
 import { motion } from 'framer-motion';
 import { getDaysUntil, getNextService } from '@/services/bookingService';
-import { ChevronRight, MapPin, CalendarDays, LogOut } from 'lucide-react';
+import { ChevronRight, MapPin, CalendarDays, LogOut, Sparkles } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function Home() {
@@ -21,12 +21,9 @@ export default function Home() {
   const daysUntilEnd = getDaysUntil(trip.endDate);
   const nextService = getNextService(trip);
 
-  const getCountdownText = () => {
-    if (daysUntilStart > 0) return t('home.startsIn', { days: daysUntilStart });
-    if (daysUntilStart === 0) return t('home.today');
-    if (daysUntilEnd >= 0) return t('home.inProgress');
-    return t('home.completed');
-  };
+  const isUpcoming = daysUntilStart > 0;
+  const isToday = daysUntilStart === 0;
+  const isInProgress = daysUntilStart < 0 && daysUntilEnd >= 0;
 
   const mainDestination = trip.destinations[0];
 
@@ -35,133 +32,146 @@ export default function Home() {
       <div className="px-5 pt-6">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
-          className="flex items-center justify-between mb-6"
+          className="flex items-center justify-between mb-5"
         >
           <div>
-            <p className="text-sm text-muted-foreground">{t('home.greeting', { name: passenger.firstName })}</p>
-            <h1 className="text-xl font-bold text-foreground">{t('home.yourTrip')}</h1>
+            <p className="text-xs font-medium text-muted-foreground tracking-wide uppercase">
+              {t('home.greeting', { name: passenger.firstName })}
+            </p>
+            <h1 className="text-2xl font-extrabold text-foreground mt-0.5 tracking-tight">
+              {trip.title}
+            </h1>
           </div>
           <button
             onClick={() => { logout(); navigate('/'); }}
-            className="h-9 w-9 rounded-full bg-card card-shadow flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            className="h-10 w-10 rounded-2xl bg-card card-shadow flex items-center justify-center text-muted-foreground hover:text-foreground transition-colors"
+            aria-label="Logout"
           >
             <LogOut className="h-4 w-4" />
           </button>
         </motion.div>
 
-        {/* Hero card */}
+        {/* Hero card with dates and status */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-          className="relative rounded-2xl overflow-hidden mb-6"
+          transition={{ delay: 0.05 }}
+          className="relative rounded-3xl overflow-hidden mb-5"
         >
           <div
-            className="h-44 bg-cover bg-center"
+            className="h-48 bg-cover bg-center"
             style={{ backgroundImage: `url(${trip.coverImageUrl || mainDestination?.imageUrl})` }}
           >
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/80 via-foreground/30 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/5" />
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-4">
-            <div className="flex items-end justify-between">
+          <div className="absolute bottom-0 left-0 right-0 p-5">
+            <div className="flex items-end justify-between gap-3">
               <div>
-                <h2 className="text-lg font-bold text-primary-foreground">{trip.title}</h2>
-                <p className="text-xs text-primary-foreground/80 flex items-center gap-1 mt-0.5">
+                <p className="text-xs text-primary-foreground/70 flex items-center gap-1.5 font-medium">
                   <CalendarDays className="h-3 w-3" />
                   {format(new Date(trip.startDate), 'MMM d')} – {format(new Date(trip.endDate), 'MMM d, yyyy')}
                 </p>
+                <div className="flex items-center gap-2 mt-2">
+                  {trip.destinations.map((dest, i) => (
+                    <span key={dest.id} className="text-primary-foreground/90 text-sm font-semibold flex items-center gap-1">
+                      {i > 0 && <span className="text-primary-foreground/40 mx-0.5">·</span>}
+                      <MapPin className="h-3 w-3" />
+                      {dest.name}
+                    </span>
+                  ))}
+                </div>
               </div>
               <StatusBadge status={trip.status} size="md" />
             </div>
           </div>
         </motion.div>
 
-        {/* Countdown */}
-        {daysUntilStart > 0 && (
+        {/* Countdown or status banner */}
+        {isUpcoming && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="bg-primary/5 rounded-2xl p-5 mb-6 text-center"
+            transition={{ delay: 0.1 }}
+            className="bg-gradient-to-br from-primary/8 to-primary/3 rounded-3xl p-6 mb-5 text-center relative overflow-hidden"
           >
-            <p className="text-4xl font-extrabold text-primary">{daysUntilStart}</p>
-            <p className="text-sm font-medium text-primary/80 mt-1">{t('home.daysLabel')}</p>
+            <div className="absolute top-3 right-4 opacity-10">
+              <Sparkles className="h-16 w-16 text-primary" />
+            </div>
+            <p className="text-5xl font-black text-primary tracking-tight">{daysUntilStart}</p>
+            <p className="text-sm font-semibold text-primary/70 mt-1">{t('home.daysLabel')}</p>
           </motion.div>
         )}
 
-        {/* Next service */}
+        {isToday && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.1 }}
+            className="bg-gradient-to-r from-success/10 to-success/5 rounded-3xl p-5 mb-5 text-center"
+          >
+            <p className="text-lg font-bold text-success">🎉 {t('home.today')}</p>
+          </motion.div>
+        )}
+
+        {isInProgress && (
+          <motion.div
+            initial={{ opacity: 0, y: 14 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+            className="bg-gradient-to-r from-primary/10 to-accent/5 rounded-3xl p-5 mb-5 text-center"
+          >
+            <p className="text-lg font-bold text-primary">✈️ {t('home.inProgress')}</p>
+            <p className="text-xs text-muted-foreground mt-1">{t('home.endsIn', { days: daysUntilEnd })}</p>
+          </motion.div>
+        )}
+
+        {/* Next service — highlighted */}
         {nextService && (
           <motion.div
-            initial={{ opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
-            className="mb-6"
+            transition={{ delay: 0.15 }}
+            className="mb-5"
           >
-            <h3 className="text-sm font-semibold text-foreground mb-3">{t('home.nextUp')}</h3>
-            <ServiceCard service={nextService} />
-          </motion.div>
-        )}
-
-        {/* Destinations */}
-        {trip.destinations.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.4 }}
-            className="mb-6"
-          >
-            <h3 className="text-sm font-semibold text-foreground mb-3">{t('home.destinations')}</h3>
-            <div className="flex gap-3 overflow-x-auto pb-1 -mx-5 px-5 scrollbar-hide">
-              {trip.destinations.map((dest) => (
-                <div
-                  key={dest.id}
-                  className="shrink-0 w-36 rounded-xl overflow-hidden bg-card card-shadow"
-                >
-                  <div
-                    className="h-20 bg-cover bg-center"
-                    style={{ backgroundImage: `url(${dest.imageUrl})` }}
-                  />
-                  <div className="p-2.5">
-                    <p className="text-sm font-semibold text-card-foreground">{dest.name}</p>
-                    <p className="text-[10px] text-muted-foreground flex items-center gap-0.5">
-                      <MapPin className="h-2.5 w-2.5" />
-                      {dest.country}
-                    </p>
-                  </div>
-                </div>
-              ))}
+            <div className="flex items-center justify-between mb-3">
+              <h3 className="text-xs font-bold text-foreground tracking-wide uppercase">{t('home.nextUp')}</h3>
+              <p className="text-[10px] font-medium text-muted-foreground">
+                {format(new Date(nextService.date), 'EEE, MMM d')}
+              </p>
             </div>
+            <ServiceCard service={nextService} highlighted />
           </motion.div>
         )}
 
         {/* Quick stats & CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.5 }}
+          transition={{ delay: 0.2 }}
+          className="mb-5"
         >
           <button
             onClick={() => navigate('/itinerary')}
-            className="w-full flex items-center justify-between p-4 bg-card rounded-xl card-shadow hover:card-shadow-hover transition-shadow"
+            className="w-full flex items-center justify-between p-4 bg-card rounded-2xl card-shadow hover:card-shadow-hover transition-shadow group"
           >
             <div className="flex items-center gap-3">
-              <div className="h-10 w-10 rounded-xl bg-primary/10 flex items-center justify-center">
+              <div className="h-11 w-11 rounded-2xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/15 transition-colors">
                 <CalendarDays className="h-5 w-5 text-primary" />
               </div>
               <div className="text-left">
-                <p className="text-sm font-semibold text-card-foreground">{t('home.viewItinerary')}</p>
+                <p className="text-sm font-bold text-card-foreground">{t('home.viewItinerary')}</p>
                 <p className="text-xs text-muted-foreground">
                   {t('home.services', { count: trip.services.length })}
                 </p>
               </div>
             </div>
-            <ChevronRight className="h-4 w-4 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
           </button>
         </motion.div>
 
-        <div className="h-6" />
+        <div className="h-4" />
       </div>
     </MobileLayout>
   );
