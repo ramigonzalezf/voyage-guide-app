@@ -13,6 +13,7 @@ import Onboarding from "./pages/Onboarding";
 import ServiceDetail from "./pages/ServiceDetail";
 import Documents from "./pages/Documents";
 import Support from "./pages/Support";
+import Destination from "./pages/Destination";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
