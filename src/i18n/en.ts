@@ -119,6 +119,7 @@ export default {
   tabs: {
     home: 'Home',
     itinerary: 'Itinerary',
+    docs: 'Docs',
     explore: 'Explore',
     support: 'Support',
   },
