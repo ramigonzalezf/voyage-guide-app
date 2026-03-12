@@ -28,7 +28,7 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
             const isActive = location.pathname === tab.path ||
               (tab.path === '/home' && location.pathname === '/');
             const Icon = tab.icon;
-            const label = tab.labelKey ? t(`tabs.${tab.labelKey}`) : t(`tabs.${tab.key}`);
+            const label = t(`tabs.${tab.key}`);
             return (
               <button
                 key={tab.key}
