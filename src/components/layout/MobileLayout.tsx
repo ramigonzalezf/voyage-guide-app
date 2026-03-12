@@ -7,9 +7,9 @@ import { motion } from 'framer-motion';
 const tabs = [
   { key: 'home', path: '/home', icon: Home },
   { key: 'itinerary', path: '/itinerary', icon: Map },
-  { key: 'explore', path: '/documents', icon: FileText, labelKey: 'docs' },
+  { key: 'docs', path: '/documents', icon: FileText },
   { key: 'support', path: '/support', icon: Headphones },
-] as const;
+];
 
 export default function MobileLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
