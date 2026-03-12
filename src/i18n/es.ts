@@ -94,11 +94,11 @@ export default {
     notes: 'Notas',
   },
   documents: {
-    title: 'Documentos',
-    subtitle: '{{count}} documentos para tu viaje',
-    available: 'Listos para descargar',
+    title: 'Mis Vouchers',
+    subtitle: '{{count}} vouchers para tu viaje',
+    available: 'Listos',
     pending: 'Pendientes',
-    note: 'Los documentos se generan automáticamente. Los documentos pendientes estarán disponibles antes de tu viaje.',
+    note: 'Los vouchers se generan automáticamente. Los pendientes aparecerán antes de tu viaje.',
   },
   support: {
     title: 'Soporte',

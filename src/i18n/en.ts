@@ -94,11 +94,11 @@ export default {
     notes: 'Notes',
   },
   documents: {
-    title: 'Documents',
-    subtitle: '{{count}} documents for your trip',
-    available: 'Ready to download',
+    title: 'My Vouchers',
+    subtitle: '{{count}} vouchers for your trip',
+    available: 'Ready',
     pending: 'Pending',
-    note: 'Documents are generated automatically. Pending documents will be available before your trip.',
+    note: 'Vouchers are generated automatically. Pending ones will appear before your trip.',
   },
   support: {
     title: 'Support',
