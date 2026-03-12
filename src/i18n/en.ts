@@ -116,6 +116,17 @@ export default {
     faq_insurance_q: 'Does my trip include travel insurance?',
     faq_insurance_a: 'Check your Documents section for your insurance policy. If you don\'t see one, contact your travel operator.',
   },
+  destination: {
+    guide: 'Destination guide',
+    localTips: 'Local tips',
+    safety: 'Safety',
+    currency: 'Money & currency',
+    weather: 'Weather',
+    transport: 'Getting around',
+    neighborhoods: 'Areas to explore',
+    enhanceTrip: 'Enhance your trip',
+    noGuide: 'Guide information coming soon for this destination.',
+  },
   tabs: {
     home: 'Home',
     itinerary: 'Itinerary',
