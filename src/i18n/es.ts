@@ -116,6 +116,17 @@ export default {
     faq_insurance_q: '¿Mi viaje incluye seguro de viaje?',
     faq_insurance_a: 'Revisa tu sección de Documentos para encontrar tu póliza de seguro. Si no la ves, contacta a tu operador de viaje.',
   },
+  destination: {
+    guide: 'Guía del destino',
+    localTips: 'Tips locales',
+    safety: 'Seguridad',
+    currency: 'Dinero y moneda',
+    weather: 'Clima',
+    transport: 'Cómo moverse',
+    neighborhoods: 'Zonas para explorar',
+    enhanceTrip: 'Mejora tu viaje',
+    noGuide: 'La información de la guía estará disponible pronto para este destino.',
+  },
   tabs: {
     home: 'Inicio',
     itinerary: 'Itinerario',

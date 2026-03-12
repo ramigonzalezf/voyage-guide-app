@@ -13,6 +13,7 @@ import Onboarding from "./pages/Onboarding";
 import ServiceDetail from "./pages/ServiceDetail";
 import Documents from "./pages/Documents";
 import Support from "./pages/Support";
+import Destination from "./pages/Destination";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -42,7 +43,7 @@ function AppRoutes() {
       <Route path="/itinerary" element={<PostLoginRoute><Itinerary /></PostLoginRoute>} />
       <Route path="/service/:serviceId" element={<PostLoginRoute><ServiceDetail /></PostLoginRoute>} />
       <Route path="/documents" element={<PostLoginRoute><Documents /></PostLoginRoute>} />
-      <Route path="/explore" element={<PostLoginRoute><Documents /></PostLoginRoute>} />
+      <Route path="/destination/:destId" element={<PostLoginRoute><Destination /></PostLoginRoute>} />
       <Route path="/support" element={<PostLoginRoute><Support /></PostLoginRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>

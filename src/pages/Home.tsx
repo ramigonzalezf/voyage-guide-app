@@ -75,11 +75,15 @@ export default function Home() {
                 </p>
                 <div className="flex items-center gap-2 mt-2">
                   {trip.destinations.map((dest, i) => (
-                    <span key={dest.id} className="text-primary-foreground/90 text-sm font-semibold flex items-center gap-1">
+                    <button
+                      key={dest.id}
+                      onClick={() => navigate(`/destination/${dest.id}`)}
+                      className="text-primary-foreground/90 text-sm font-semibold flex items-center gap-1 hover:text-primary-foreground transition-colors"
+                    >
                       {i > 0 && <span className="text-primary-foreground/40 mx-0.5">·</span>}
                       <MapPin className="h-3 w-3" />
                       {dest.name}
-                    </span>
+                    </button>
                   ))}
                 </div>
               </div>
