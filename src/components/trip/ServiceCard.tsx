@@ -14,8 +14,6 @@ function getServiceTitle(service: Service, t: (key: string) => string): string {
       return `${t('itinerary.transfer')} · ${service.pickupPoint.split('–')[0].trim()}`;
     case 'excursion':
       return service.title;
-    default:
-      return service.provider || 'Service';
   }
 }
 
