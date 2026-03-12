@@ -66,7 +66,7 @@ export default function Home() {
           >
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/90 via-foreground/40 to-foreground/5" />
           </div>
-          <div className="absolute bottom-0 left-0 right-0 p-5">
+          <div className="absolute bottom-0 left-0 right-0 p-5 z-10">
             <div className="flex items-end justify-between gap-3">
               <div>
                 <p className="text-xs text-primary-foreground/70 flex items-center gap-1.5 font-medium">
