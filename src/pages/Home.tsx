@@ -6,7 +6,7 @@ import ServiceCard from '@/components/trip/ServiceCard';
 import StatusBadge from '@/components/trip/StatusBadge';
 import { motion } from 'framer-motion';
 import { getDaysUntil, getNextService } from '@/services/bookingService';
-import { ChevronRight, MapPin, CalendarDays, LogOut, Sparkles } from 'lucide-react';
+import { ChevronRight, MapPin, CalendarDays, LogOut, Sparkles, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 
 export default function Home() {
@@ -53,7 +53,7 @@ export default function Home() {
           </button>
         </motion.div>
 
-        {/* Hero card with dates and status */}
+        {/* Hero card */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,7 @@ export default function Home() {
           </div>
         </motion.div>
 
-        {/* Countdown or status banner */}
+        {/* Countdown */}
         {isUpcoming && (
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -127,7 +127,7 @@ export default function Home() {
           </motion.div>
         )}
 
-        {/* Next service — highlighted */}
+        {/* Next service */}
         {nextService && (
           <motion.div
             initial={{ opacity: 0, y: 14 }}
@@ -145,12 +145,12 @@ export default function Home() {
           </motion.div>
         )}
 
-        {/* Quick stats & CTA */}
+        {/* Quick links */}
         <motion.div
           initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="mb-5"
+          className="space-y-2 mb-5"
         >
           <button
             onClick={() => navigate('/itinerary')}
@@ -162,9 +162,23 @@ export default function Home() {
               </div>
               <div className="text-left">
                 <p className="text-sm font-bold text-card-foreground">{t('home.viewItinerary')}</p>
-                <p className="text-xs text-muted-foreground">
-                  {t('home.services', { count: trip.services.length })}
-                </p>
+                <p className="text-xs text-muted-foreground">{t('home.services', { count: trip.services.length })}</p>
+              </div>
+            </div>
+            <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />
+          </button>
+
+          <button
+            onClick={() => navigate('/documents')}
+            className="w-full flex items-center justify-between p-4 bg-card rounded-2xl card-shadow hover:card-shadow-hover transition-shadow group"
+          >
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent/15 transition-colors">
+                <FileText className="h-5 w-5 text-accent" />
+              </div>
+              <div className="text-left">
+                <p className="text-sm font-bold text-card-foreground">{t('home.documents')}</p>
+                <p className="text-xs text-muted-foreground">{t('home.documentsDesc')}</p>
               </div>
             </div>
             <ChevronRight className="h-4 w-4 text-muted-foreground group-hover:text-foreground transition-colors" />

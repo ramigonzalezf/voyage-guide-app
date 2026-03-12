@@ -1,13 +1,13 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
-import { Home, Map, Compass, Headphones } from 'lucide-react';
+import { Home, Map, FileText, Headphones } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 
 const tabs = [
   { key: 'home', path: '/home', icon: Home },
   { key: 'itinerary', path: '/itinerary', icon: Map },
-  { key: 'explore', path: '/explore', icon: Compass },
+  { key: 'explore', path: '/documents', icon: FileText, labelKey: 'docs' },
   { key: 'support', path: '/support', icon: Headphones },
 ] as const;
 
@@ -22,13 +22,13 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
         {children}
       </main>
 
-      {/* Bottom Tab Bar */}
       <nav className="fixed bottom-0 left-0 right-0 z-50 bg-card/80 backdrop-blur-xl border-t border-border/50 safe-bottom">
         <div className="flex items-center justify-around h-16 max-w-lg mx-auto px-2">
           {tabs.map((tab) => {
             const isActive = location.pathname === tab.path ||
               (tab.path === '/home' && location.pathname === '/');
             const Icon = tab.icon;
+            const label = tab.labelKey ? t(`tabs.${tab.labelKey}`) : t(`tabs.${tab.key}`);
             return (
               <button
                 key={tab.key}
@@ -47,7 +47,7 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
                 )}
                 <Icon className={cn('h-5 w-5 transition-transform', isActive && 'scale-110')} strokeWidth={isActive ? 2.5 : 1.5} />
                 <span className={cn('text-[10px] leading-none', isActive ? 'font-bold' : 'font-medium')}>
-                  {t(`tabs.${tab.key}`)}
+                  {label}
                 </span>
               </button>
             );

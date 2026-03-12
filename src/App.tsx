@@ -10,7 +10,9 @@ import Login from "./pages/Login";
 import Home from "./pages/Home";
 import Itinerary from "./pages/Itinerary";
 import Onboarding from "./pages/Onboarding";
-import ComingSoon from "./pages/ComingSoon";
+import ServiceDetail from "./pages/ServiceDetail";
+import Documents from "./pages/Documents";
+import Support from "./pages/Support";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -38,8 +40,10 @@ function AppRoutes() {
       <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
       <Route path="/home" element={<PostLoginRoute><Home /></PostLoginRoute>} />
       <Route path="/itinerary" element={<PostLoginRoute><Itinerary /></PostLoginRoute>} />
-      <Route path="/explore" element={<PostLoginRoute><ComingSoon title="Explore" /></PostLoginRoute>} />
-      <Route path="/support" element={<PostLoginRoute><ComingSoon title="Support" /></PostLoginRoute>} />
+      <Route path="/service/:serviceId" element={<PostLoginRoute><ServiceDetail /></PostLoginRoute>} />
+      <Route path="/documents" element={<PostLoginRoute><Documents /></PostLoginRoute>} />
+      <Route path="/explore" element={<PostLoginRoute><Documents /></PostLoginRoute>} />
+      <Route path="/support" element={<PostLoginRoute><Support /></PostLoginRoute>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
   );
