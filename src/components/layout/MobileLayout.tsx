@@ -24,9 +24,11 @@ export default function MobileLayout({ children }: { children: React.ReactNode }
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-background">
-      {/* Agency logo bar */}
-      <div className="flex items-center justify-center py-2 px-5 border-b border-border/30 bg-card/60 backdrop-blur-md">
-        <img src={towerLogo} alt="Tower Travel" className="h-8 object-contain" />
+      {/* Agency + Tower logo bar */}
+      <div className="flex items-center justify-between py-2 px-5 border-b border-border/30 bg-card/60 backdrop-blur-md">
+        <img src={DEFAULT_AGENCY_LOGO} alt="Agency" className="h-7 object-contain" />
+        <div className="h-5 w-px bg-border/40" />
+        <img src={towerLogo} alt="Tower Travel" className="h-7 object-contain" />
       </div>
 
       <main className="flex-1 overflow-y-auto pb-20">
