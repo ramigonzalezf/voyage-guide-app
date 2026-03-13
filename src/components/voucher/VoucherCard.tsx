@@ -17,6 +17,25 @@ const labelMap: Record<Document['type'], string> = {
   other: 'DOCUMENT',
 };
 
+// Map service type (from linked service) to CSS color token
+type ServiceTypeKey = 'flight' | 'hotel' | 'transfer' | 'excursion' | 'insurance';
+
+const serviceColorMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight))',
+  hotel: 'hsl(var(--service-hotel))',
+  transfer: 'hsl(var(--service-transfer))',
+  excursion: 'hsl(var(--service-excursion))',
+  insurance: 'hsl(var(--service-insurance))',
+};
+
+const serviceFgMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight-foreground))',
+  hotel: 'hsl(var(--service-hotel-foreground))',
+  transfer: 'hsl(var(--service-transfer-foreground))',
+  excursion: 'hsl(var(--service-excursion-foreground))',
+  insurance: 'hsl(var(--service-insurance-foreground))',
+};
+
 interface VoucherCardProps {
   doc: Document;
   serviceInfo?: {
