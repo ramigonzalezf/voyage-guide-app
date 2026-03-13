@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { Home, Map, FileText, Headphones } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
+import towerLogo from '@/assets/tower-travel-logo.png';
 
 const tabs = [
   { key: 'home', path: '/home', icon: Home },
