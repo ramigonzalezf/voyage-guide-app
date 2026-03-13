@@ -83,10 +83,7 @@ export default function Login() {
         >
           {/* Tower Travel Logo */}
           <div className="flex flex-col items-center mb-10">
-            <div className="h-16 w-16 rounded-2xl bg-accent flex items-center justify-center mb-4 shadow-elevated">
-              <Building className="h-8 w-8 text-accent-foreground" />
-            </div>
-            <h1 className="text-2xl font-extrabold text-primary-foreground tracking-tight">Tower Travel</h1>
+            <img src={towerLogo} alt="Tower Travel" className="h-14 mb-4" />
             <p className="text-xs text-primary-foreground/50 mt-1 font-medium tracking-wide">Your travel companion</p>
           </div>
 
