@@ -132,8 +132,8 @@ export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, in
                 </div>
               )}
             </div>
-            <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-              <Icon className="h-3.5 w-3.5 text-accent" />
+            <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `${headerBg}1A` }}>
+              <Icon className="h-3.5 w-3.5" style={{ color: headerBg }} />
             </div>
           </div>
         )}
