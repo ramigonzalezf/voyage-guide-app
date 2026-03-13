@@ -69,26 +69,26 @@ export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, in
         isPending ? 'opacity-50' : 'active:scale-[0.97] hover:card-shadow-hover'
       )}
     >
-      {/* Pass header — color-coded by service type */}
-      <div className="px-5 py-4 relative" style={{ backgroundColor: headerBg }}>
+      {/* Pass header — gradient by service type */}
+      <div className="px-5 py-4 relative" style={{ background: headerGradient }}>
         {/* Decorative circle */}
-        <div className="absolute top-3 right-4 h-8 w-8 rounded-full" style={{ backgroundColor: `${headerFg}10` }} />
+        <div className="absolute top-3 right-4 h-8 w-8 rounded-full bg-white/[0.08]" />
 
         <div className="flex items-center gap-2 mb-3">
-          <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${headerFg}1A` }}>
-            <Icon className="h-3.5 w-3.5" style={{ color: headerFg }} />
+          <div className="h-7 w-7 rounded-lg flex items-center justify-center bg-white/[0.15]">
+            <Icon className="h-3.5 w-3.5 text-white" />
           </div>
-          <span className="text-[10px] font-bold tracking-[0.18em] uppercase" style={{ color: `${headerFg}B3` }}>
+          <span className="text-[10px] font-bold tracking-[0.18em] uppercase text-white/70">
             {labelMap[doc.type]}
           </span>
         </div>
 
-        <h3 className="text-[15px] font-extrabold leading-snug pr-8" style={{ color: headerFg }}>
+        <h3 className="text-[15px] font-extrabold leading-snug pr-8 text-white">
           {doc.title}
         </h3>
 
         {serviceInfo?.reference && (
-          <p className="text-[11px] font-mono mt-1.5 tracking-wider" style={{ color: `${headerFg}80` }}>
+          <p className="text-[11px] font-mono mt-1.5 tracking-wider text-white/50">
             {serviceInfo.reference}
           </p>
         )}
