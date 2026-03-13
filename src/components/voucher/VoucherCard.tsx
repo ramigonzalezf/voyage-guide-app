@@ -69,26 +69,26 @@ export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, in
         isPending ? 'opacity-50' : 'active:scale-[0.97] hover:card-shadow-hover'
       )}
     >
-      {/* Pass header — navy/primary branded */}
-      <div className="bg-primary px-5 py-4 relative">
+      {/* Pass header — color-coded by service type */}
+      <div className="px-5 py-4 relative" style={{ backgroundColor: headerBg }}>
         {/* Decorative circle */}
-        <div className="absolute top-3 right-4 h-8 w-8 rounded-full bg-primary-foreground/[0.08]" />
+        <div className="absolute top-3 right-4 h-8 w-8 rounded-full" style={{ backgroundColor: `${headerFg}10` }} />
 
         <div className="flex items-center gap-2 mb-3">
-          <div className="h-7 w-7 rounded-lg bg-primary-foreground/[0.12] flex items-center justify-center">
-            <Icon className="h-3.5 w-3.5 text-primary-foreground" />
+          <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${headerFg}1A` }}>
+            <Icon className="h-3.5 w-3.5" style={{ color: headerFg }} />
           </div>
-          <span className="text-[10px] font-bold tracking-[0.18em] text-primary-foreground/70 uppercase">
+          <span className="text-[10px] font-bold tracking-[0.18em] uppercase" style={{ color: `${headerFg}B3` }}>
             {labelMap[doc.type]}
           </span>
         </div>
 
-        <h3 className="text-[15px] font-extrabold text-primary-foreground leading-snug pr-8">
+        <h3 className="text-[15px] font-extrabold leading-snug pr-8" style={{ color: headerFg }}>
           {doc.title}
         </h3>
 
         {serviceInfo?.reference && (
-          <p className="text-[11px] font-mono text-primary-foreground/50 mt-1.5 tracking-wider">
+          <p className="text-[11px] font-mono mt-1.5 tracking-wider" style={{ color: `${headerFg}80` }}>
             {serviceInfo.reference}
           </p>
         )}
