@@ -99,7 +99,6 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
                     <p className="text-xs font-mono mt-2 tracking-widest text-white/45">
                       {service.reference}
                     </p>
-                    </p>
                   )}
                 </div>
 
