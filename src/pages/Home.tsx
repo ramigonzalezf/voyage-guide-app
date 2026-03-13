@@ -100,9 +100,6 @@ export default function Home() {
             transition={{ delay: 0.1 }}
             className="bg-gradient-to-br from-primary/8 to-primary/3 rounded-3xl p-6 mb-5 text-center relative overflow-hidden"
           >
-            <div className="absolute top-3 right-4 opacity-10">
-              <Sparkles className="h-16 w-16 text-primary" />
-            </div>
             <p className="text-5xl font-black text-primary tracking-tight">{daysUntilStart}</p>
             <p className="text-sm font-semibold text-primary/70 mt-1">{t('home.daysLabel')}</p>
           </motion.div>
