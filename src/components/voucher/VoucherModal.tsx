@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plane, Building2, Car, Compass, Shield, MapPin, Phone, Mail, Clock, Calendar, User } from 'lucide-react';
+import { X, Plane, Building2, Car, Compass, Shield, MapPin, Phone, Mail, Clock, Calendar, User, Share2 } from 'lucide-react';
 import type { Document, Service } from '@/types/booking';
 import { cn } from '@/lib/utils';
 
@@ -138,10 +138,31 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
                 </div>
 
                 {/* Pass Footer */}
-                <div className="bg-muted/40 px-6 py-4 border-t border-border/50">
-                  <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
+                <div className="bg-muted/40 px-6 py-4 border-t border-border/50 flex items-center justify-between">
+                  <p className="text-[11px] text-muted-foreground leading-relaxed">
                     Present this pass at the point of service
                   </p>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      const lines = [
+                        `📄 *${doc.title}*`,
+                        service?.reference ? `Ref: ${service.reference}` : '',
+                        `👤 ${passengerName}`,
+                        service?.date ? `📅 ${new Date(service.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })}` : '',
+                        service?.time ? `🕐 ${service.time}` : '',
+                        service?.provider ? `🏢 ${service.provider}` : '',
+                        '',
+                        `Status: ${doc.status === 'available' ? '✅ Confirmed' : '⏳ Pending'}`,
+                      ].filter(Boolean).join('\n');
+                      const url = `https://wa.me/?text=${encodeURIComponent(lines)}`;
+                      window.open(url, '_blank');
+                    }}
+                    className="h-9 w-9 rounded-full bg-[#25D366]/10 flex items-center justify-center hover:bg-[#25D366]/20 transition-colors shrink-0"
+                    aria-label="Share via WhatsApp"
+                  >
+                    <Share2 className="h-4 w-4 text-[#25D366]" />
+                  </button>
                 </div>
               </div>
             </div>
