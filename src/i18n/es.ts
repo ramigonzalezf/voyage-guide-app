@@ -21,7 +21,7 @@ export default {
     submit: 'Acceder a mi viaje',
     error: 'No encontramos una reserva con esos datos. Por favor verifica e intenta de nuevo.',
     selectPassenger: '¿Quién eres tú?',
-    hint: 'Demo: usa TRV-2026-1042 / García',
+    hint: 'Ingresa tu código de reserva y apellido para acceder a tu viaje',
   },
   onboarding: {
     welcomeTitle: '¡Hola {{name}}!',
