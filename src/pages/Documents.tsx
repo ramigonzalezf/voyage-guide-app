@@ -29,6 +29,14 @@ export default function Documents() {
   const available = mockDocuments.filter((d) => d.status === 'available');
   const pending = mockDocuments.filter((d) => d.status === 'pending');
 
+  const getServiceType = (doc: Document) => {
+    if (doc.type === 'insurance') return 'insurance' as const;
+    if (!doc.serviceId) return undefined;
+    const svc = session.trip.services.find((s) => s.id === doc.serviceId);
+    if (!svc) return undefined;
+    return svc.type as 'flight' | 'hotel' | 'transfer' | 'excursion';
+  };
+
   const getServiceInfo = (doc: Document) => {
     if (!doc.serviceId) return undefined;
     const svc = session.trip.services.find((s) => s.id === doc.serviceId);
