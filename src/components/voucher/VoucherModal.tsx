@@ -47,6 +47,9 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
   if (!doc) return null;
 
   const Icon = iconMap[doc.type];
+  const colorKey: ServiceTypeKey = service?.type as ServiceTypeKey || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
+  const headerBg = serviceColorMap[colorKey];
+  const headerFg = serviceFgMap[colorKey];
 
   return (
     <AnimatePresence>
