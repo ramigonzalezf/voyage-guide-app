@@ -1,15 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plane, Building2, Car, Compass, Shield, MapPin, Phone, Mail, Clock, Calendar, User } from 'lucide-react';
-import type { Document } from '@/types/booking';
-import type { Service } from '@/types/booking';
+import type { Document, Service } from '@/types/booking';
 import { cn } from '@/lib/utils';
-
-const accentMap: Record<Document['type'], string> = {
-  ticket: 'from-sky-500 to-blue-600',
-  voucher: 'from-emerald-500 to-teal-600',
-  insurance: 'from-violet-500 to-purple-600',
-  other: 'from-amber-500 to-orange-600',
-};
 
 const iconMap = {
   ticket: Plane,
@@ -45,64 +37,100 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          className="fixed inset-0 z-50 bg-background"
+          className="fixed inset-0 z-50 bg-background/95 backdrop-blur-sm"
         >
           <motion.div
             initial={{ y: '100%' }}
             animate={{ y: 0 }}
             exit={{ y: '100%' }}
-            transition={{ type: 'spring', damping: 28, stiffness: 300 }}
+            transition={{ type: 'spring', damping: 30, stiffness: 320 }}
             className="h-full flex flex-col"
           >
-            {/* Header */}
-            <div className={cn('bg-gradient-to-r px-5 pt-12 pb-6 relative', accentMap[doc.type])}>
+            {/* Top bar */}
+            <div className="flex items-center justify-between px-5 pt-12 pb-3">
+              <span className="text-xs font-bold text-muted-foreground uppercase tracking-widest">
+                {labelMap[doc.type]}
+              </span>
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 h-8 w-8 rounded-full bg-white/20 flex items-center justify-center backdrop-blur-sm"
+                className="h-8 w-8 rounded-full bg-muted flex items-center justify-center"
               >
-                <X className="h-4 w-4 text-white" />
+                <X className="h-4 w-4 text-muted-foreground" />
               </button>
-
-              <div className="flex items-center gap-2 mb-4">
-                <Icon className="h-5 w-5 text-white/90" />
-                <span className="text-[11px] font-bold tracking-[0.15em] text-white/80 uppercase">
-                  {labelMap[doc.type]}
-                </span>
-              </div>
-
-              <h2 className="text-xl font-extrabold text-white leading-tight">{doc.title}</h2>
-
-              {service?.reference && (
-                <p className="text-sm text-white/70 mt-2 font-mono tracking-wider">{service.reference}</p>
-              )}
             </div>
 
-            {/* Perforated edge */}
-            <div className="flex items-center px-0 bg-background">
-              <div className={cn('h-4 w-4 rounded-full -ml-2 shrink-0 bg-gradient-to-r', accentMap[doc.type])} />
-              <div className="flex-1 border-t border-dashed border-border mx-1" />
-              <div className={cn('h-4 w-4 rounded-full -mr-2 shrink-0 bg-gradient-to-r', accentMap[doc.type])} />
-            </div>
+            {/* Scrollable pass */}
+            <div className="flex-1 overflow-y-auto px-5 pb-10">
+              <div className="rounded-[22px] overflow-hidden card-shadow max-w-md mx-auto">
+                {/* Pass Header */}
+                <div className="bg-primary px-6 pt-6 pb-5 relative">
+                  {/* Decorative circles */}
+                  <div className="absolute top-4 right-5 h-12 w-12 rounded-full bg-primary-foreground/[0.05]" />
+                  <div className="absolute bottom-3 right-12 h-6 w-6 rounded-full bg-primary-foreground/[0.04]" />
 
-            {/* Body */}
-            <div className="flex-1 overflow-y-auto px-5 py-5 space-y-5">
-              {/* Passenger */}
-              <InfoRow icon={User} label="Passenger" value={passengerName} />
+                  <div className="flex items-center gap-2.5 mb-4">
+                    <div className="h-9 w-9 rounded-xl bg-primary-foreground/[0.12] flex items-center justify-center">
+                      <Icon className="h-4.5 w-4.5 text-primary-foreground" />
+                    </div>
+                    <div>
+                      <span className="text-[10px] font-bold tracking-[0.18em] text-primary-foreground/60 uppercase block">
+                        {labelMap[doc.type]}
+                      </span>
+                    </div>
+                  </div>
 
-              {/* Service-specific details */}
-              {service && <ServiceDetails service={service} />}
+                  <h2 className="text-xl font-extrabold text-primary-foreground leading-tight pr-12">
+                    {doc.title}
+                  </h2>
 
-              {/* Status */}
-              <div className="bg-muted/50 rounded-xl p-4 text-center">
-                <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-emerald-500/10">
-                  <div className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <span className="text-xs font-bold text-emerald-600 uppercase tracking-wide">
-                    {doc.status === 'available' ? 'Confirmed' : 'Pending'}
-                  </span>
+                  {service?.reference && (
+                    <p className="text-xs font-mono text-primary-foreground/45 mt-2 tracking-widest">
+                      {service.reference}
+                    </p>
+                  )}
                 </div>
-                <p className="text-[11px] text-muted-foreground mt-2">
-                  Present this voucher at the point of service
-                </p>
+
+                {/* Perforated edge */}
+                <div className="flex items-center bg-card relative">
+                  <div className="h-5 w-5 rounded-full bg-background -ml-2.5 shrink-0 relative z-10" />
+                  <div className="flex-1 border-t border-dashed border-border mx-0" />
+                  <div className="h-5 w-5 rounded-full bg-background -mr-2.5 shrink-0 relative z-10" />
+                </div>
+
+                {/* Pass Body */}
+                <div className="bg-card px-6 py-5 space-y-5">
+                  {/* Passenger row */}
+                  <FieldRow label="Passenger" value={passengerName} />
+
+                  {/* Service-specific fields */}
+                  {service && <ServiceFields service={service} />}
+
+                  {/* Status pill */}
+                  <div className="pt-2">
+                    <div className={cn(
+                      'inline-flex items-center gap-2 px-4 py-2 rounded-full',
+                      doc.status === 'available' ? 'bg-[hsl(var(--success)/0.1)]' : 'bg-muted'
+                    )}>
+                      <div className={cn(
+                        'h-2 w-2 rounded-full',
+                        doc.status === 'available' ? 'bg-[hsl(var(--success))] animate-pulse' : 'bg-muted-foreground'
+                      )} />
+                      <span className={cn(
+                        'text-[11px] font-bold uppercase tracking-wider',
+                        doc.status === 'available' ? 'text-[hsl(var(--success))]' : 'text-muted-foreground'
+                      )}>
+                        {doc.status === 'available' ? 'Confirmed' : 'Pending'}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Pass Footer */}
+                <div className="bg-muted/40 px-6 py-4 border-t border-border/50">
+                  <p className="text-[11px] text-muted-foreground text-center leading-relaxed">
+                    Present this pass at the point of service
+                  </p>
+                </div>
               </div>
             </div>
           </motion.div>
@@ -112,89 +140,91 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
   );
 }
 
-function InfoRow({ icon: IconComp, label, value }: { icon: React.ComponentType<{ className?: string }>; label: string; value: string }) {
+/* ---- Shared field row ---- */
+function FieldRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-start gap-3">
-      <div className="h-9 w-9 rounded-xl bg-muted flex items-center justify-center shrink-0">
-        <IconComp className="h-4 w-4 text-muted-foreground" />
-      </div>
-      <div className="flex-1 min-w-0">
-        <p className="text-[11px] font-medium text-muted-foreground uppercase tracking-wide">{label}</p>
-        <p className="text-sm font-semibold text-foreground mt-0.5">{value}</p>
-      </div>
+    <div>
+      <p className="text-[9px] font-bold text-muted-foreground uppercase tracking-[0.15em]">{label}</p>
+      <p className="text-sm font-bold text-foreground mt-0.5">{value}</p>
     </div>
   );
 }
 
-function ServiceDetails({ service }: { service: Service }) {
+/* ---- Service-specific detail blocks ---- */
+function ServiceFields({ service }: { service: Service }) {
   switch (service.type) {
     case 'flight':
       return (
         <div className="space-y-4">
-          {/* Route */}
-          <div className="bg-card rounded-xl border border-border/50 p-4">
-            <div className="flex items-center justify-between">
-              <div className="text-center">
-                <p className="text-2xl font-extrabold text-foreground">{service.originCode}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5 max-w-[90px] truncate">{service.origin}</p>
-              </div>
-              <div className="flex-1 flex items-center justify-center px-3">
-                <div className="h-px flex-1 bg-border" />
-                <Plane className="h-4 w-4 text-primary mx-2 rotate-90" />
-                <div className="h-px flex-1 bg-border" />
-              </div>
-              <div className="text-center">
-                <p className="text-2xl font-extrabold text-foreground">{service.destinationCode}</p>
-                <p className="text-[11px] text-muted-foreground mt-0.5 max-w-[90px] truncate">{service.destination}</p>
-              </div>
+          {/* Route display */}
+          <div className="flex items-center justify-between py-2">
+            <div className="text-center">
+              <p className="text-2xl font-extrabold text-foreground tracking-tight">{service.originCode}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5 max-w-[80px] truncate">{service.origin}</p>
+            </div>
+            <div className="flex-1 flex items-center justify-center px-4">
+              <div className="h-px flex-1 bg-border" />
+              <Plane className="h-4 w-4 text-accent mx-2 rotate-90" />
+              <div className="h-px flex-1 bg-border" />
+            </div>
+            <div className="text-center">
+              <p className="text-2xl font-extrabold text-foreground tracking-tight">{service.destinationCode}</p>
+              <p className="text-[10px] text-muted-foreground mt-0.5 max-w-[80px] truncate">{service.destination}</p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
-            <InfoRow icon={Calendar} label="Date" value={new Date(service.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} />
-            <InfoRow icon={Clock} label="Departure" value={service.departureTime} />
+          <div className="grid grid-cols-3 gap-3">
+            <FieldRow label="Date" value={new Date(service.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} />
+            <FieldRow label="Departure" value={service.departureTime} />
+            <FieldRow label="Flight" value={service.flightNumber} />
           </div>
-          <InfoRow icon={Plane} label="Flight" value={`${service.airline} · ${service.flightNumber}`} />
-          {service.terminal && <InfoRow icon={MapPin} label="Terminal" value={service.terminal} />}
-          {service.notes && <InfoRow icon={Compass} label="Notes" value={service.notes} />}
+          <div className="grid grid-cols-2 gap-3">
+            <FieldRow label="Airline" value={service.airline} />
+            {service.terminal && <FieldRow label="Terminal" value={service.terminal} />}
+          </div>
+          {service.notes && <FieldRow label="Notes" value={service.notes} />}
         </div>
       );
 
     case 'hotel':
       return (
         <div className="space-y-4">
-          <InfoRow icon={Building2} label="Hotel" value={service.hotelName} />
-          <InfoRow icon={MapPin} label="Address" value={service.address} />
+          <FieldRow label="Hotel" value={service.hotelName} />
+          <FieldRow label="Address" value={service.address} />
           <div className="grid grid-cols-2 gap-3">
-            <InfoRow icon={Calendar} label="Check-in" value={new Date(service.checkIn).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} />
-            <InfoRow icon={Calendar} label="Check-out" value={new Date(service.checkOut).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} />
+            <FieldRow label="Check-in" value={new Date(service.checkIn).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} />
+            <FieldRow label="Check-out" value={new Date(service.checkOut).toLocaleDateString('en-GB', { day: 'numeric', month: 'short' })} />
           </div>
-          {service.roomType && <InfoRow icon={Building2} label="Room" value={service.roomType} />}
-          <InfoRow icon={Compass} label="Board" value={service.boardBasis} />
-          {service.contactPhone && <InfoRow icon={Phone} label="Phone" value={service.contactPhone} />}
-          {service.contactEmail && <InfoRow icon={Mail} label="Email" value={service.contactEmail} />}
+          <div className="grid grid-cols-2 gap-3">
+            {service.roomType && <FieldRow label="Room" value={service.roomType} />}
+            <FieldRow label="Board" value={service.boardBasis} />
+          </div>
+          {service.contactPhone && <FieldRow label="Phone" value={service.contactPhone} />}
+          {service.contactEmail && <FieldRow label="Email" value={service.contactEmail} />}
         </div>
       );
 
     case 'transfer':
       return (
         <div className="space-y-4">
-          <InfoRow icon={MapPin} label="Pickup" value={service.pickupPoint} />
-          <InfoRow icon={MapPin} label="Drop-off" value={service.dropoffPoint} />
-          <InfoRow icon={Clock} label="Schedule" value={service.schedule} />
-          {service.vehicleType && <InfoRow icon={Car} label="Vehicle" value={service.vehicleType} />}
-          {service.instructions && <InfoRow icon={Compass} label="Instructions" value={service.instructions} />}
+          <FieldRow label="Pickup" value={service.pickupPoint} />
+          <FieldRow label="Drop-off" value={service.dropoffPoint} />
+          <FieldRow label="Schedule" value={service.schedule} />
+          {service.vehicleType && <FieldRow label="Vehicle" value={service.vehicleType} />}
+          {service.instructions && <FieldRow label="Instructions" value={service.instructions} />}
         </div>
       );
 
     case 'excursion':
       return (
         <div className="space-y-4">
-          <InfoRow icon={Compass} label="Activity" value={service.title} />
-          <InfoRow icon={Calendar} label="Date" value={new Date(service.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' })} />
-          {service.time && <InfoRow icon={Clock} label="Time" value={service.time} />}
-          <InfoRow icon={MapPin} label="Meeting point" value={service.meetingPoint} />
-          <InfoRow icon={Clock} label="Duration" value={service.duration} />
+          <FieldRow label="Activity" value={service.title} />
+          <div className="grid grid-cols-2 gap-3">
+            <FieldRow label="Date" value={new Date(service.date).toLocaleDateString('en-GB', { day: 'numeric', month: 'long' })} />
+            {service.time && <FieldRow label="Time" value={service.time} />}
+          </div>
+          <FieldRow label="Meeting Point" value={service.meetingPoint} />
+          <FieldRow label="Duration" value={service.duration} />
           <div className="bg-muted/30 rounded-xl p-3">
             <p className="text-xs text-muted-foreground leading-relaxed">{service.description}</p>
           </div>
