@@ -5,9 +5,10 @@ import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Loader2, ChevronRight, Globe, Building } from 'lucide-react';
+import { Loader2, ChevronRight, Globe } from 'lucide-react';
 import type { Passenger } from '@/types/booking';
 import i18n from '@/i18n';
+import towerLogo from '@/assets/tower-travel-logo.png';
 
 export default function Login() {
   const { t } = useTranslation();
