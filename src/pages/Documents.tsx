@@ -89,6 +89,7 @@ export default function Documents() {
                 <VoucherCard
                   key={doc.id}
                   doc={doc}
+                  serviceType={getServiceType(doc)}
                   serviceInfo={getServiceInfo(doc)}
                   onClick={() => setSelectedDoc(doc)}
                   index={i}
