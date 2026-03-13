@@ -19,20 +19,12 @@ const labelMap: Record<Document['type'], string> = {
 
 type ServiceTypeKey = 'flight' | 'hotel' | 'transfer' | 'excursion' | 'insurance';
 
-const serviceColorMap: Record<ServiceTypeKey, string> = {
-  flight: 'hsl(var(--service-flight))',
-  hotel: 'hsl(var(--service-hotel))',
-  transfer: 'hsl(var(--service-transfer))',
-  excursion: 'hsl(var(--service-excursion))',
-  insurance: 'hsl(var(--service-insurance))',
-};
-
-const serviceFgMap: Record<ServiceTypeKey, string> = {
-  flight: 'hsl(var(--service-flight-foreground))',
-  hotel: 'hsl(var(--service-hotel-foreground))',
-  transfer: 'hsl(var(--service-transfer-foreground))',
-  excursion: 'hsl(var(--service-excursion-foreground))',
-  insurance: 'hsl(var(--service-insurance-foreground))',
+const serviceGradientMap: Record<ServiceTypeKey, string> = {
+  flight: 'linear-gradient(135deg, hsl(210 75% 38%), hsl(225 65% 48%))',
+  hotel: 'linear-gradient(135deg, hsl(160 50% 30%), hsl(175 45% 38%))',
+  transfer: 'linear-gradient(135deg, hsl(25 70% 38%), hsl(40 65% 42%))',
+  excursion: 'linear-gradient(135deg, hsl(270 50% 38%), hsl(290 45% 48%))',
+  insurance: 'linear-gradient(135deg, hsl(330 60% 38%), hsl(345 55% 48%))',
 };
 
 interface VoucherModalProps {
@@ -48,8 +40,7 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
 
   const Icon = iconMap[doc.type];
   const colorKey: ServiceTypeKey = service?.type as ServiceTypeKey || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
-  const headerBg = serviceColorMap[colorKey];
-  const headerFg = serviceFgMap[colorKey];
+  const headerGradient = serviceGradientMap[colorKey];
 
   return (
     <AnimatePresence>
@@ -84,28 +75,28 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
             <div className="flex-1 overflow-y-auto px-5 pb-10">
               <div className="rounded-[22px] overflow-hidden card-shadow max-w-md mx-auto">
                 {/* Pass Header */}
-                <div className="px-6 pt-6 pb-5 relative" style={{ backgroundColor: headerBg }}>
+                <div className="px-6 pt-6 pb-5 relative" style={{ background: headerGradient }}>
                   {/* Decorative circles */}
-                  <div className="absolute top-4 right-5 h-12 w-12 rounded-full" style={{ backgroundColor: `${headerFg}0D` }} />
-                  <div className="absolute bottom-3 right-12 h-6 w-6 rounded-full" style={{ backgroundColor: `${headerFg}0A` }} />
+                  <div className="absolute top-4 right-5 h-12 w-12 rounded-full bg-white/[0.06]" />
+                  <div className="absolute bottom-3 right-12 h-6 w-6 rounded-full bg-white/[0.04]" />
 
                   <div className="flex items-center gap-2.5 mb-4">
-                    <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${headerFg}1F` }}>
-                      <Icon className="h-4.5 w-4.5" style={{ color: headerFg }} />
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center bg-white/[0.12]">
+                      <Icon className="h-4.5 w-4.5 text-white" />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold tracking-[0.18em] uppercase block" style={{ color: `${headerFg}99` }}>
+                      <span className="text-[10px] font-bold tracking-[0.18em] uppercase block text-white/60">
                         {labelMap[doc.type]}
                       </span>
                     </div>
                   </div>
 
-                  <h2 className="text-xl font-extrabold leading-tight pr-12" style={{ color: headerFg }}>
+                  <h2 className="text-xl font-extrabold leading-tight pr-12 text-white">
                     {doc.title}
                   </h2>
 
                   {service?.reference && (
-                    <p className="text-xs font-mono mt-2 tracking-widest" style={{ color: `${headerFg}73` }}>
+                    <p className="text-xs font-mono mt-2 tracking-widest text-white/45">
                       {service.reference}
                     </p>
                   )}
