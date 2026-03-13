@@ -4,6 +4,11 @@ import { Home, Map, FileText, Headphones } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { motion } from 'framer-motion';
 import towerLogo from '@/assets/tower-travel-logo.png';
+import agencyLogoPlaceholder from '@/assets/agency-logo-placeholder.png';
+
+// TODO: Replace with real API call to fetch agency logo
+// e.g. const agencyLogo = useAgencyBranding()?.logoUrl ?? agencyLogoPlaceholder;
+const DEFAULT_AGENCY_LOGO = agencyLogoPlaceholder;
 
 const tabs = [
   { key: 'home', path: '/home', icon: Home },
