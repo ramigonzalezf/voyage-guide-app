@@ -19,20 +19,12 @@ const labelMap: Record<Document['type'], string> = {
 
 type ServiceTypeKey = 'flight' | 'hotel' | 'transfer' | 'excursion' | 'insurance';
 
-const serviceColorMap: Record<ServiceTypeKey, string> = {
-  flight: 'hsl(var(--service-flight))',
-  hotel: 'hsl(var(--service-hotel))',
-  transfer: 'hsl(var(--service-transfer))',
-  excursion: 'hsl(var(--service-excursion))',
-  insurance: 'hsl(var(--service-insurance))',
-};
-
-const serviceFgMap: Record<ServiceTypeKey, string> = {
-  flight: 'hsl(var(--service-flight-foreground))',
-  hotel: 'hsl(var(--service-hotel-foreground))',
-  transfer: 'hsl(var(--service-transfer-foreground))',
-  excursion: 'hsl(var(--service-excursion-foreground))',
-  insurance: 'hsl(var(--service-insurance-foreground))',
+const serviceGradientMap: Record<ServiceTypeKey, string> = {
+  flight: 'linear-gradient(135deg, hsl(210 75% 38%), hsl(225 65% 48%))',
+  hotel: 'linear-gradient(135deg, hsl(160 50% 30%), hsl(175 45% 38%))',
+  transfer: 'linear-gradient(135deg, hsl(25 70% 38%), hsl(40 65% 42%))',
+  excursion: 'linear-gradient(135deg, hsl(270 50% 38%), hsl(290 45% 48%))',
+  insurance: 'linear-gradient(135deg, hsl(330 60% 38%), hsl(345 55% 48%))',
 };
 
 interface VoucherModalProps {
