@@ -54,8 +54,8 @@ export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, in
   const Icon = iconMap[doc.type];
   const isPending = doc.status === 'pending';
   const colorKey: ServiceTypeKey = serviceType || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
-  const headerBg = serviceColorMap[colorKey];
-  const headerFg = serviceFgMap[colorKey];
+  const headerGradient = serviceGradientMap[colorKey];
+  const accentColor = serviceAccentMap[colorKey];
 
   return (
     <motion.button
