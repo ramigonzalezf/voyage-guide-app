@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Plane, Building2, Car, Compass, Shield, MapPin, Phone, Mail, Clock, Calendar, User } from 'lucide-react';
+import { X, Plane, Building2, Car, Compass, Shield, MapPin, Phone, Mail, Clock, Calendar, User, Share2 } from 'lucide-react';
 import type { Document, Service } from '@/types/booking';
 import { cn } from '@/lib/utils';
 
