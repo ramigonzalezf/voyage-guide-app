@@ -38,6 +38,7 @@ const serviceFgMap: Record<ServiceTypeKey, string> = {
 
 interface VoucherCardProps {
   doc: Document;
+  serviceType?: ServiceTypeKey;
   serviceInfo?: {
     date?: string;
     time?: string;
@@ -49,9 +50,12 @@ interface VoucherCardProps {
   index: number;
 }
 
-export default function VoucherCard({ doc, serviceInfo, onClick, index }: VoucherCardProps) {
+export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, index }: VoucherCardProps) {
   const Icon = iconMap[doc.type];
   const isPending = doc.status === 'pending';
+  const colorKey: ServiceTypeKey = serviceType || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
+  const headerBg = serviceColorMap[colorKey];
+  const headerFg = serviceFgMap[colorKey];
 
   return (
     <motion.button
