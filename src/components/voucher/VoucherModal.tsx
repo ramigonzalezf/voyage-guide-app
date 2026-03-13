@@ -17,6 +17,24 @@ const labelMap: Record<Document['type'], string> = {
   other: 'DOCUMENT',
 };
 
+type ServiceTypeKey = 'flight' | 'hotel' | 'transfer' | 'excursion' | 'insurance';
+
+const serviceColorMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight))',
+  hotel: 'hsl(var(--service-hotel))',
+  transfer: 'hsl(var(--service-transfer))',
+  excursion: 'hsl(var(--service-excursion))',
+  insurance: 'hsl(var(--service-insurance))',
+};
+
+const serviceFgMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight-foreground))',
+  hotel: 'hsl(var(--service-hotel-foreground))',
+  transfer: 'hsl(var(--service-transfer-foreground))',
+  excursion: 'hsl(var(--service-excursion-foreground))',
+  insurance: 'hsl(var(--service-insurance-foreground))',
+};
+
 interface VoucherModalProps {
   open: boolean;
   onClose: () => void;
@@ -29,6 +47,9 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
   if (!doc) return null;
 
   const Icon = iconMap[doc.type];
+  const colorKey: ServiceTypeKey = service?.type as ServiceTypeKey || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
+  const headerBg = serviceColorMap[colorKey];
+  const headerFg = serviceFgMap[colorKey];
 
   return (
     <AnimatePresence>
@@ -63,28 +84,28 @@ export default function VoucherModal({ open, onClose, doc, service, passengerNam
             <div className="flex-1 overflow-y-auto px-5 pb-10">
               <div className="rounded-[22px] overflow-hidden card-shadow max-w-md mx-auto">
                 {/* Pass Header */}
-                <div className="bg-primary px-6 pt-6 pb-5 relative">
+                <div className="px-6 pt-6 pb-5 relative" style={{ backgroundColor: headerBg }}>
                   {/* Decorative circles */}
-                  <div className="absolute top-4 right-5 h-12 w-12 rounded-full bg-primary-foreground/[0.05]" />
-                  <div className="absolute bottom-3 right-12 h-6 w-6 rounded-full bg-primary-foreground/[0.04]" />
+                  <div className="absolute top-4 right-5 h-12 w-12 rounded-full" style={{ backgroundColor: `${headerFg}0D` }} />
+                  <div className="absolute bottom-3 right-12 h-6 w-6 rounded-full" style={{ backgroundColor: `${headerFg}0A` }} />
 
                   <div className="flex items-center gap-2.5 mb-4">
-                    <div className="h-9 w-9 rounded-xl bg-primary-foreground/[0.12] flex items-center justify-center">
-                      <Icon className="h-4.5 w-4.5 text-primary-foreground" />
+                    <div className="h-9 w-9 rounded-xl flex items-center justify-center" style={{ backgroundColor: `${headerFg}1F` }}>
+                      <Icon className="h-4.5 w-4.5" style={{ color: headerFg }} />
                     </div>
                     <div>
-                      <span className="text-[10px] font-bold tracking-[0.18em] text-primary-foreground/60 uppercase block">
+                      <span className="text-[10px] font-bold tracking-[0.18em] uppercase block" style={{ color: `${headerFg}99` }}>
                         {labelMap[doc.type]}
                       </span>
                     </div>
                   </div>
 
-                  <h2 className="text-xl font-extrabold text-primary-foreground leading-tight pr-12">
+                  <h2 className="text-xl font-extrabold leading-tight pr-12" style={{ color: headerFg }}>
                     {doc.title}
                   </h2>
 
                   {service?.reference && (
-                    <p className="text-xs font-mono text-primary-foreground/45 mt-2 tracking-widest">
+                    <p className="text-xs font-mono mt-2 tracking-widest" style={{ color: `${headerFg}73` }}>
                       {service.reference}
                     </p>
                   )}

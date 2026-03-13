@@ -21,7 +21,7 @@ export default {
     submit: 'Access my trip',
     error: 'We couldn\'t find a booking with those details. Please check and try again.',
     selectPassenger: 'Who are you?',
-    hint: 'Demo: use TRV-2026-1042 / García',
+    hint: 'Enter your booking code and last name to access your trip',
   },
   onboarding: {
     welcomeTitle: 'Hi {{name}}!',

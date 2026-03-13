@@ -17,8 +17,28 @@ const labelMap: Record<Document['type'], string> = {
   other: 'DOCUMENT',
 };
 
+// Map service type (from linked service) to CSS color token
+type ServiceTypeKey = 'flight' | 'hotel' | 'transfer' | 'excursion' | 'insurance';
+
+const serviceColorMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight))',
+  hotel: 'hsl(var(--service-hotel))',
+  transfer: 'hsl(var(--service-transfer))',
+  excursion: 'hsl(var(--service-excursion))',
+  insurance: 'hsl(var(--service-insurance))',
+};
+
+const serviceFgMap: Record<ServiceTypeKey, string> = {
+  flight: 'hsl(var(--service-flight-foreground))',
+  hotel: 'hsl(var(--service-hotel-foreground))',
+  transfer: 'hsl(var(--service-transfer-foreground))',
+  excursion: 'hsl(var(--service-excursion-foreground))',
+  insurance: 'hsl(var(--service-insurance-foreground))',
+};
+
 interface VoucherCardProps {
   doc: Document;
+  serviceType?: ServiceTypeKey;
   serviceInfo?: {
     date?: string;
     time?: string;
@@ -30,9 +50,12 @@ interface VoucherCardProps {
   index: number;
 }
 
-export default function VoucherCard({ doc, serviceInfo, onClick, index }: VoucherCardProps) {
+export default function VoucherCard({ doc, serviceType, serviceInfo, onClick, index }: VoucherCardProps) {
   const Icon = iconMap[doc.type];
   const isPending = doc.status === 'pending';
+  const colorKey: ServiceTypeKey = serviceType || (doc.type === 'ticket' ? 'flight' : doc.type === 'insurance' ? 'insurance' : 'hotel');
+  const headerBg = serviceColorMap[colorKey];
+  const headerFg = serviceFgMap[colorKey];
 
   return (
     <motion.button
@@ -46,26 +69,26 @@ export default function VoucherCard({ doc, serviceInfo, onClick, index }: Vouche
         isPending ? 'opacity-50' : 'active:scale-[0.97] hover:card-shadow-hover'
       )}
     >
-      {/* Pass header — navy/primary branded */}
-      <div className="bg-primary px-5 py-4 relative">
+      {/* Pass header — color-coded by service type */}
+      <div className="px-5 py-4 relative" style={{ backgroundColor: headerBg }}>
         {/* Decorative circle */}
-        <div className="absolute top-3 right-4 h-8 w-8 rounded-full bg-primary-foreground/[0.08]" />
+        <div className="absolute top-3 right-4 h-8 w-8 rounded-full" style={{ backgroundColor: `${headerFg}10` }} />
 
         <div className="flex items-center gap-2 mb-3">
-          <div className="h-7 w-7 rounded-lg bg-primary-foreground/[0.12] flex items-center justify-center">
-            <Icon className="h-3.5 w-3.5 text-primary-foreground" />
+          <div className="h-7 w-7 rounded-lg flex items-center justify-center" style={{ backgroundColor: `${headerFg}1A` }}>
+            <Icon className="h-3.5 w-3.5" style={{ color: headerFg }} />
           </div>
-          <span className="text-[10px] font-bold tracking-[0.18em] text-primary-foreground/70 uppercase">
+          <span className="text-[10px] font-bold tracking-[0.18em] uppercase" style={{ color: `${headerFg}B3` }}>
             {labelMap[doc.type]}
           </span>
         </div>
 
-        <h3 className="text-[15px] font-extrabold text-primary-foreground leading-snug pr-8">
+        <h3 className="text-[15px] font-extrabold leading-snug pr-8" style={{ color: headerFg }}>
           {doc.title}
         </h3>
 
         {serviceInfo?.reference && (
-          <p className="text-[11px] font-mono text-primary-foreground/50 mt-1.5 tracking-wider">
+          <p className="text-[11px] font-mono mt-1.5 tracking-wider" style={{ color: `${headerFg}80` }}>
             {serviceInfo.reference}
           </p>
         )}
@@ -109,8 +132,8 @@ export default function VoucherCard({ doc, serviceInfo, onClick, index }: Vouche
                 </div>
               )}
             </div>
-            <div className="h-8 w-8 rounded-full bg-accent/10 flex items-center justify-center shrink-0">
-              <Icon className="h-3.5 w-3.5 text-accent" />
+            <div className="h-8 w-8 rounded-full flex items-center justify-center shrink-0" style={{ backgroundColor: `${headerBg}1A` }}>
+              <Icon className="h-3.5 w-3.5" style={{ color: headerBg }} />
             </div>
           </div>
         )}

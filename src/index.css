@@ -47,6 +47,18 @@
     --info: 210 80% 55%;
     --info-foreground: 0 0% 100%;
 
+    /* Service-type colors */
+    --service-flight: 210 85% 50%;
+    --service-flight-foreground: 0 0% 100%;
+    --service-hotel: 155 55% 38%;
+    --service-hotel-foreground: 0 0% 100%;
+    --service-transfer: 35 90% 50%;
+    --service-transfer-foreground: 30 50% 12%;
+    --service-excursion: 280 60% 50%;
+    --service-excursion-foreground: 0 0% 100%;
+    --service-insurance: 330 75% 50%;
+    --service-insurance-foreground: 0 0% 100%;
+
     --sidebar-background: 0 0% 98%;
     --sidebar-foreground: 240 5.3% 26.1%;
     --sidebar-primary: 240 5.9% 10%;
